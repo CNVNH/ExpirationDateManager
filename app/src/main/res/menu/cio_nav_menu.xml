@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<group
+		android:checkableBehavior="single">
+
+		<item
+			android:id="@+id/cio_dest_notes"
+			android:title="Notes"
+			android:icon="@drawable/cio_icon_holder"
+			android:checked="true"/>
+
+		<item
+			android:id="@+id/cio_dest_products"
+			android:title="Products"
+			android:icon="@drawable/cio_icon_holder"/>
+
+		<item
+			android:id="@+id/cio_dest_suppliers"
+			android:title="Suppliers"
+			android:icon="@drawable/cio_icon_holder"/>
+
+	</group>
+
+	<item
+		android:title="Tools">
+
+		<menu>
+
+			<item
+				android:id="@+id/cio_menu_item_date_calculator"
+				android:title="Date calculator"
+				android:icon="@drawable/cio_icon_holder"/>
+
+		</menu>
+
+	</item>
+
+</menu>

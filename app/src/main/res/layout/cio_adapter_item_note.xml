@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<import type="android.view.View"/>
+		<import type="ru.cnvnh.expirationdatemanager.converters.CIODateConverter"/>
+
+		<variable
+			name="viewModel"
+			type="ru.cnvnh.expirationdatemanager.view_models.CIONotesViewModel"/>
+
+		<variable
+			name="pos"
+			type="Integer"/>
+
+		<variable
+			name="showDate"
+			type="Boolean"/>
+
+		<variable
+			name="showSupplier"
+			type="Boolean"/>
+
+	</data>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cio_expire_date_layout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintTop_toTopOf="parent"
+			android:visibility="@{showDate ? View.VISIBLE : View.GONE}">
+
+			<FrameLayout
+				android:id="@+id/cio_divider"
+				android:layout_width="match_parent"
+				android:layout_height="32dp"
+				app:layout_constraintTop_toTopOf="parent"
+				android:visibility="@{pos != 0 ? View.VISIBLE : View.GONE}"/>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:layout_constraintTop_toBottomOf="@id/cio_divider"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+				android:paddingStart="16dp"
+				android:paddingEnd="16dp"
+				android:background="@color/cio_dialog_background_color">
+
+				<TextView
+					android:id="@+id/cio_days_left"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					android:text="10 days left"
+					tools:text="10 days left"/>
+
+				<TextView
+					android:id="@+id/cio_expire_date"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					android:gravity="center"
+					android:text="@{CIODateConverter.dateToString(viewModel.getNote(pos).expireDate)}"
+					tools:text="00.00.0000"
+					android:textSize="16sp"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					android:text="Wednesday"
+					tools:text="Wednesday"/>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cio_supplier_name_layout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintTop_toBottomOf="@id/cio_expire_date_layout"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingStart="16dp"
+			android:paddingEnd="16dp"
+			android:background="@color/cio_dialog_background_color"
+			android:visibility="@{showSupplier ? View.VISIBLE : View.GONE}">
+
+			<TextView
+				android:id="@+id/cio_supplier_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				android:text="@{`From ` + (viewModel.getNote(pos).supplierName ?? `unknown suppliers`)}"
+				tools:text="Supplier name"
+				android:onClick="@{()->viewModel.onSupplierClicked(pos)}"
+				app:onLongClickListener="@{()->viewModel.onSupplierLongClicked(pos)}"/>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="8dp"
+			android:paddingStart="16dp"
+			android:paddingEnd="16dp"
+			app:layout_constraintTop_toBottomOf="@id/cio_supplier_name_layout"
+			android:background="@color/cio_dialog_background_color">
+
+			<ImageView
+				android:id="@+id/cio_supplier_logo"
+				android:layout_width="64dp"
+				android:layout_height="64dp"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				android:src="@drawable/cio_icon_holder"
+				android:background="@drawable/cio_image_button_background"
+				android:visibility="@{showSupplier ? View.VISIBLE : View.INVISIBLE}"
+				android:onClick="@{()->viewModel.onSupplierClicked(pos)}"
+				app:onLongClickListener="@{()->viewModel.onSupplierLongClicked(pos)}"/>
+			
+			<FrameLayout
+				android:layout_width="11.3dp"
+				android:layout_height="11.3dp"
+				app:layout_constraintTop_toTopOf="@id/cio_supplier_logo"
+				app:layout_constraintBottom_toBottomOf="@id/cio_supplier_logo"
+				app:layout_constraintStart_toStartOf="@id/cio_product_layout"
+				app:layout_constraintEnd_toStartOf="@id/cio_product_layout"
+				android:rotation="45"
+				android:background="@color/cio_image_button_background_color"
+				android:visibility="@{showSupplier ? View.VISIBLE : View.GONE}"/>
+			
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cio_product_layout"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:padding="8dp"
+				android:layout_marginStart="16dp"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toEndOf="@id/cio_supplier_logo"
+				app:layout_constraintEnd_toEndOf="parent"
+				android:background="@drawable/cio_image_button_background"
+				android:onClick="@{()->viewModel.onProductClicked(pos)}"
+				app:onLongClickListener="@{()->viewModel.onProductLongClicked(pos)}">
+
+				<TextView
+					android:id="@+id/cio_barcode"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					android:text="@{viewModel.getNote(pos).barcode}"
+					tools:text="0000000000000"/>
+
+				<TextView
+					android:id="@+id/cio_code"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toBottomOf="@id/cio_barcode"
+					app:layout_constraintStart_toStartOf="parent"
+					android:text="@{viewModel.getNote(pos).code ?? `Code is not set`}"
+					tools:text="0000000"/>
+
+				<TextView
+					android:id="@+id/cio_product_name"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toBottomOf="@id/cio_code"
+					app:layout_constraintStart_toStartOf="parent"
+					android:text="@{viewModel.getNote(pos).productName ?? `Name is not set`}"
+					tools:text="Product name"/>
+				
+			</androidx.constraintlayout.widget.ConstraintLayout>
+			
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

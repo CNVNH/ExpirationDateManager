@@ -1,0 +1,28 @@
+<resources>
+
+	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+
+		<item name="windowNoTitle">true</item>
+		<item name="windowActionBar">false</item>
+
+		<item name="imageButtonStyle">@style/ImageButton</item>
+	</style>
+
+	<style name="BottomBar">
+		<item name="android:paddingTop">8dp</item>
+		<item name="android:paddingBottom">8dp</item>
+		<item name="android:paddingStart">16dp</item>
+		<item name="android:paddingEnd">16dp</item>
+		<item name="android:background">@color/cio_dialog_background_color</item>
+	</style>
+
+	<style name="ImageButton" parent="Widget.AppCompat.ImageButton">
+		<item name="android:padding">12dp</item>
+		<item name="android:tint">@color/cio_image_button_tint</item>
+		<item name="android:background">@drawable/cio_image_button_background</item>
+	</style>
+
+</resources>
